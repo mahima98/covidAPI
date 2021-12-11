@@ -8,6 +8,7 @@ import  HelloWorld from '../src/components/HelloWorld.vue'
 import  Dogs from '../src/components/Dogs.vue'
 import Covid from '../src/components/Covid.vue'
 import Country from '../src/components/Country.vue'
+import Countries from '../src/components/Countries.vue'
 
 const routes = [
     {
@@ -26,12 +27,18 @@ const routes = [
         ]
     },
     {
-        path: '/foods',
-        component: Foods
-    },
-    {
         path: '/covid',
         component: Covid,
+        children: [
+            {
+                path: ':countryName',
+                component: Country
+            }
+        ]
+    },
+    {
+        path: '/countries',
+        component: Countries,
         children: [
             {
                 path: ':countryName',

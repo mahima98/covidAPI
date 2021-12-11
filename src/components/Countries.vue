@@ -1,0 +1,43 @@
+<template>
+  <Menu />
+  <div class="p-4 flex flex-wrap gap-2 gap-x-2">
+    <div
+      v-for="(country, index) in countries"
+      :key="country"
+      :values="country"
+      :numbers="index"
+    >
+      <router-link
+        :to="'/countries/' + index"
+        class="px-4 py-2 my-2 bg-red-700 rounded-xl text-white hover:bg-red-900"
+        >{{ index }}</router-link
+      >
+    </div>
+    <router-view />
+  </div>
+</template>
+<script>
+import Menu from "./Menu.vue";
+export default {
+  components: {
+    Menu,
+  },
+
+  data: () => {
+    return {
+      countries: [],
+      countriesData: [],
+    };
+  },
+
+  mounted() {
+    console.log("hi");
+    fetch("https://pomber.github.io/covid19/timeseries.json")
+      .then((res) => res.json())
+      .then((data) => {
+        this.countriesData.value = data;
+        this.countries = this.countriesData.value;
+      });
+  },
+};
+</script>

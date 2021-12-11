@@ -2,14 +2,14 @@
   <div class="container mx-auto">
     <div class="flex justify-center content-center text-center py-10">
       <div>
-        COVID DETAILS FOR
+        COVID DETAILS FOR :
         <p class="text-2xl font-bold">{{ this.countryName }}</p>
       </div>
     </div>
     <div>
       <div class="grid grid-cols-6 gap-4">
         <div
-          v-for="(country, index) in countriesDetails"
+          v-for="(country, index) in countriesDetails.slice(0, 30)"
           :key="country"
           :values="country"
           :numbers="index"
@@ -41,6 +41,7 @@ export default {
       countriesDetails: [],
     };
   },
+
   mounted() {
     fetch("https://pomber.github.io/covid19/timeseries.json")
       .then((res) => res.json())
@@ -48,8 +49,13 @@ export default {
         this.countries.value = data;
         this.countryName = this.$route.params.countryName;
         console.log("this.countryName", this.countryName);
-        this.countriesDetails = this.countries.value[this.countryName];
+        this.countriesDetails =
+          this.countries.value[this.countryName].reverse();
       });
+  },
+  beforeRouteUpdate(to) {
+    this.countryName = to.params.countryName;
+    this.countriesDetails = this.countries.value[this.countryName].reverse();
   },
 };
 </script>
