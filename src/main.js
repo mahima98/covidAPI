@@ -42,7 +42,8 @@ const routes = [
         children: [
             {
                 path: ':countryName',
-                component: Country
+                component: Country,
+                name: 'singleCountry'
             }
         ]
     },

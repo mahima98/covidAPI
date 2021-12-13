@@ -8,7 +8,7 @@
       :numbers="index"
     >
       <router-link
-        :to="'/countries/' + index"
+        :to="{ name: 'singleCountry', params: { countryName: index } }"
         class="px-4 py-2 my-2 bg-red-700 rounded-xl text-white hover:bg-red-900"
         >{{ index }}</router-link
       >

@@ -4,6 +4,8 @@
       <div>
         COVID DETAILS FOR :
         <p class="text-2xl font-bold">{{ this.countryName }}</p>
+        <div v-if="loader">loading..</div>
+        <div v-else>done loading</div>
       </div>
     </div>
     <div>
@@ -36,26 +38,32 @@ export default {
   },
   data: () => {
     return {
-      countryName: "",
       countries: [],
-      countriesDetails: [],
+      loader: false,
     };
   },
 
+  computed: {
+    countryName() {
+      return this.$route.params.countryName;
+    },
+
+    countriesDetails() {
+      if (this.countries.length === 0) {
+        return [];
+      }
+      return this.countries[this.countryName].reverse();
+    },
+  },
+
   mounted() {
+    this.loader = true;
     fetch("https://pomber.github.io/covid19/timeseries.json")
       .then((res) => res.json())
       .then((data) => {
-        this.countries.value = data;
-        this.countryName = this.$route.params.countryName;
-        console.log("this.countryName", this.countryName);
-        this.countriesDetails =
-          this.countries.value[this.countryName].reverse();
+        this.countries = data;
+        this.loader = false;
       });
-  },
-  beforeRouteUpdate(to) {
-    this.countryName = to.params.countryName;
-    this.countriesDetails = this.countries.value[this.countryName].reverse();
   },
 };
 </script>
