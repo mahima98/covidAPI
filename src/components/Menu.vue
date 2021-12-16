@@ -1,6 +1,6 @@
 <template>
   <div class="bg-red-900">
-    <div class="grid grid-cols-5 text-white">
+    <div class="grid grid-cols-6 text-white">
       <router-link to="/" class="hover:text-red-700 hover:bg-red-50 px-10 py-5"
         >Hw</router-link
       >
@@ -23,6 +23,11 @@
         to="/countries"
         class="hover:bg-red-50 hover:text-red-700 px-10 py-5"
         >Countries</router-link
+      >
+      <router-link
+        to="/graph"
+        class="hover:bg-red-50 hover:text-red-700 px-10 py-5"
+        >Graph</router-link
       >
     </div>
   </div>

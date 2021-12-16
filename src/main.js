@@ -9,6 +9,7 @@ import  Dogs from '../src/components/Dogs.vue'
 import Covid from '../src/components/Covid.vue'
 import Country from '../src/components/Country.vue'
 import Countries from '../src/components/Countries.vue'
+import Graph from '../src/components/Graph.vue'
 
 const routes = [
     {
@@ -46,6 +47,9 @@ const routes = [
                 name: 'singleCountry'
             }
         ]
+    },{
+        path: '/graph',
+        component: Graph,
     },
 
 ]
