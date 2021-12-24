@@ -1,11 +1,14 @@
 <template>
   <Menu />
-  <div class="bg-yellow-500 p-4 text-center">In progress..</div>
-  <div>
+  <div class="py-4">
     <canvas id="covid-chart" height="100"></canvas>
+      <div class="p-4 flex justify-start align-items">
+    <input type="range" min="0" max="1200" v-model="myRange" @change="changeRange">
+    {{ myRange}}
   </div>
-  <input type="range" min="0" max="200" v-model="myRange">
-  {{ myRange}}
+  <div></div>
+  <div></div>
+  </div>
 </template>
 
 <script>
@@ -18,24 +21,19 @@ export default {
   },
   data: () => {
     return {
-      numbers: [],
       country: [],
       countriesData: [],
       countries: [],
       oneCountry: [],
       countryIndex: [],
-      items: [],
-      dates: [],
-      deathValues: [],
       number: 2,
       covidChartData: [],
-      myRange: 50
+      myRange: 150,
     };
   },
 
   computed: {
     totalMarks() {
-      console.log("number", this.number);
       return this.number * 2;
     },
 
@@ -45,7 +43,6 @@ export default {
 
     allCountriesName() {
       if (this.countries.length === 0) {
-        console.log("empty array");
         return [];
       } else {
         for (const [key, value] of Object.entries(this.countries)) {
@@ -54,12 +51,14 @@ export default {
       }
     },
 
-    deathValuessForOneCountry() {
+    deathValuesForOneCountry() {
       if (this.countries.length === 0) {
         return [];
       }
       return this.countries["Mauritius"].map((item, index) => {
-        return item.deaths;
+        if(index <= 200) {
+          return item.deaths;
+        }
       });
     },
 
@@ -68,7 +67,9 @@ export default {
         return [];
       }
       return this.countries["Mauritius"].map((item, index) => {
-        return item.date;
+        if(index <= 200) {
+          return item.date;
+        }
       });
     },
   },
@@ -79,22 +80,23 @@ export default {
       .then((data) => {
         this.countries = data;
 
-        this.countries["Mauritius"].filter((item, index) => {
-          if (index < 200) {
-            this.dates.push(item.date);
-            this.deathValues.push(item.deaths);
-          }
-        });
-        this.setCovidChartData(this.datesForOneCountry, this.deathValuessForOneCountry);
+        // this.countries["Mauritius"].filter((item, index) => {
+        //   if (index < 200) {
+        //     this.dates.push(item.date);
+        //     this.deathValues.push(item.deaths);
+        //   }
+        // });
+
+        this.setCovidChartData(this.datesForOneCountry, this.deathValuesForOneCountry);
         this.loader = false;
       });
-    console.log("dates", this.dates);
-    console.log("deaths", this.deathValues);
-
-    
   },
 
   methods: {
+    changeRange() {
+      this.$emit('changeRange', this.myRange); 
+      console.log('changeRange-', this.myRange);
+    },
     setCovidChartData(dates, deathValues) {
       this.covidChartData = {
             type: "line",
