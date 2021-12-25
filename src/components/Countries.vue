@@ -1,11 +1,12 @@
 <template>
   <Menu />
-  <div class="p-4 flex flex-wrap gap-2 gap-x-2">
+  <div class="p-4 flex flex-wrap">
     <div
       v-for="(country, index) in countries"
       :key="country"
       :values="country"
       :numbers="index"
+      class="p-2"
     >
       <router-link
         :to="{ name: 'singleCountry', params: { countryName: index } }"
