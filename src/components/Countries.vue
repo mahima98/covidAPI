@@ -14,7 +14,7 @@
         >{{ index }}</router-link
       >
     </div>
-    <router-view />
+    <router-view :key="$route.params.countryName" />
   </div>
 </template>
 <script>

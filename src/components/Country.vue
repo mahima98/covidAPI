@@ -8,7 +8,6 @@
         <div v-else></div>
       </div>
     </div>
-
     <div class="py-4">
       <canvas id="covid-chart" height="100"></canvas>
       <div class="p-4 flex justify-start align-items">
@@ -22,7 +21,6 @@
         {{ myRange }}
       </div>
     </div>
-
     <div>
       <div class="grid grid-cols-6 gap-4">
         <div
@@ -63,6 +61,7 @@ export default {
       covidChartData: [],
       myRange: 150,
       newRangeValue: "",
+      errorMsg: "",
       loader: false,
     };
   },
@@ -93,7 +92,7 @@ export default {
       if (this.countries.length === 0) {
         return [];
       }
-      return this.countries[this.countryName].map((item, index) => {
+      return this.countriesDetails.map((item, index) => {
         return item.deaths;
       });
     },
@@ -102,28 +101,30 @@ export default {
       if (this.countries.length === 0) {
         return [];
       }
-      return this.countries[this.countryName].map((item, index) => {
+      return this.countriesDetails.map((item, index) => {
         return item.date;
       });
-    },
-
-    setChartData() {
-      return this.setCovidChartData(
-        this.datesForOneCountry,
-        this.deathValuesForOneCountry,
-        this.countryName
-      );
     },
   },
 
   mounted() {
     this.loader = true;
+
     fetch("https://pomber.github.io/covid19/timeseries.json")
       .then((res) => res.json())
       .then((data) => {
         this.countries = data;
-        this.setChartData;
+
+        this.renderChart(
+          this.datesForOneCountry,
+          this.deathValuesForOneCountry,
+          this.countryName
+        );
+
         this.loader = false;
+      })
+      .catch((error) => {
+        this.errorMsg = error;
       });
   },
 
@@ -133,7 +134,7 @@ export default {
       console.log("changeRange-", this.myRange);
       return this.myRange;
     },
-    setCovidChartData(dates, deathValues, countryName) {
+    renderChart(dates, deathValues, countryName) {
       this.covidChartData = {
         type: "line",
         data: {
@@ -174,5 +175,13 @@ export default {
       new Chart(ctx, this.covidChartData);
     },
   },
+
+  // Another way to track changes when changing from a certain value is by using watch
+  // watch: {
+  //   $route(to, from) {
+  //     console.log(to);
+  //     console.log(from);
+  //   },
+  // },
 };
 </script>
