@@ -88,7 +88,7 @@ export default {
       }
     },
 
-    deathValuesForOneCountry() {
+    deathValues() {
       if (this.countries.length === 0) {
         return [];
       }
@@ -97,7 +97,7 @@ export default {
       });
     },
 
-    datesForOneCountry() {
+    dateValues() {
       if (this.countries.length === 0) {
         return [];
       }
@@ -125,8 +125,8 @@ export default {
         this.countries = data;
 
         this.renderChart(
-          this.datesForOneCountry,
-          this.deathValuesForOneCountry,
+          this.dateValues,
+          this.deathValues,
           this.recoveredValues
         );
 
@@ -143,11 +143,11 @@ export default {
       console.log("changeRange-", this.myRange);
       return this.myRange;
     },
-    renderChart(dates, deathValues, recoveredValues) {
+    renderChart(dateValues, deathValues, recoveredValues) {
       this.covidChartData = {
         type: "line",
         data: {
-          labels: dates,
+          labels: dateValues,
           datasets: [
             {
               label: "Number of deaths",
