@@ -92,7 +92,7 @@ export default {
       if (this.countries.length === 0) {
         return [];
       }
-      return this.countriesDetails.map((item, index) => {
+      return this.countriesDetails.map((item) => {
         return item.deaths;
       });
     },
@@ -101,8 +101,17 @@ export default {
       if (this.countries.length === 0) {
         return [];
       }
-      return this.countriesDetails.map((item, index) => {
+      return this.countriesDetails.map((item) => {
         return item.date;
+      });
+    },
+
+    recoveredValues() {
+      if (this.countries.length === 0) {
+        return [];
+      }
+      return this.countriesDetails.map((item) => {
+        return item.recovered;
       });
     },
   },
@@ -118,6 +127,7 @@ export default {
         this.renderChart(
           this.datesForOneCountry,
           this.deathValuesForOneCountry,
+          this.recoveredValues,
           this.countryName
         );
 
@@ -134,7 +144,7 @@ export default {
       console.log("changeRange-", this.myRange);
       return this.myRange;
     },
-    renderChart(dates, deathValues, countryName) {
+    renderChart(dates, deathValues, recoveredValues, countryName) {
       this.covidChartData = {
         type: "line",
         data: {
@@ -147,13 +157,13 @@ export default {
               borderColor: "#36495d",
               borderWidth: 3,
             },
-            //   {
-            //     label: "covidary Mass (relative to the Sun x 10^-6)",
-            //     data: [0.166, 2.081, 3.003, 0.323, 954.792, 285.886, 43.662, 51.514],
-            //     backgroundColor: "rgba(71, 183,132,.5)",
-            //     borderColor: "#47b784",
-            //     borderWidth: 3
-            //   }
+            {
+              label: "Recovered",
+              data: recoveredValues,
+              backgroundColor: "rgba(71, 183,132,.5)",
+              borderColor: "#47b784",
+              borderWidth: 3,
+            },
           ],
         },
         options: {
