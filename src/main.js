@@ -9,7 +9,6 @@ import Dogs from "../src/components/Dogs.vue";
 import Covid from "../src/components/Covid.vue";
 import Country from "../src/components/Country.vue";
 import Countries from "../src/components/Countries.vue";
-import Graph from "../src/components/Graph.vue";
 
 const routes = [
   {
@@ -46,16 +45,7 @@ const routes = [
         component: Country,
         name: "singleCountry",
       },
-      {
-        path: ":countryName",
-        component: Graph,
-        name: "countryGraph",
-      },
     ],
-  },
-  {
-    path: "/graph",
-    component: Graph,
   },
 ];
 

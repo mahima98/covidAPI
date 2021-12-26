@@ -127,8 +127,7 @@ export default {
         this.renderChart(
           this.datesForOneCountry,
           this.deathValuesForOneCountry,
-          this.recoveredValues,
-          this.countryName
+          this.recoveredValues
         );
 
         this.loader = false;
@@ -144,14 +143,14 @@ export default {
       console.log("changeRange-", this.myRange);
       return this.myRange;
     },
-    renderChart(dates, deathValues, recoveredValues, countryName) {
+    renderChart(dates, deathValues, recoveredValues) {
       this.covidChartData = {
         type: "line",
         data: {
           labels: dates,
           datasets: [
             {
-              label: "Number of deaths for country: " + countryName,
+              label: "Number of deaths",
               data: deathValues,
               backgroundColor: "rgba(54,73,93,.5)",
               borderColor: "#36495d",
