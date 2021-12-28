@@ -39,11 +39,13 @@ const routes = [
   {
     path: "/countries",
     component: Countries,
+    props: true,
     children: [
       {
         path: ":countryName",
         component: Country,
         name: "singleCountry",
+        props: true,
       },
     ],
   },

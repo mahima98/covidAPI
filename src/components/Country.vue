@@ -9,18 +9,13 @@
       </div>
     </div>
     <div class="py-4">
+      range: {{ getRangeValue }}
+
+      <!-- graph -->
       <canvas id="covid-chart" height="100"></canvas>
-      <div class="p-4 flex justify-start align-items">
-        <input
-          type="range"
-          min="0"
-          max="1200"
-          v-model="myRange"
-          @change="changeRange"
-        />
-        {{ myRange }} {{ newRangeValue }}
-      </div>
     </div>
+
+    <!-- countries covid info -->
     <div>
       <div class="grid grid-cols-6 gap-4">
         <div
@@ -47,6 +42,8 @@ import Chart from "chart.js";
 import Menu from "./Menu.vue";
 
 export default {
+  inheritAttrs: false,
+  props: ["inputRange"],
   components: {
     Menu,
   },
@@ -57,12 +54,8 @@ export default {
       countries: [],
       oneCountry: [],
       countryIndex: [],
-      number: 2,
       covidChartData: [],
-      myRange: 150,
-      newRangeValue: null,
       errorMsg: "",
-      test: "",
       loader: false,
     };
   },
@@ -72,11 +65,19 @@ export default {
       return this.$route.params.countryName;
     },
 
+    getRangeValue() {
+      return this.$props.inputRange;
+    },
+
     countriesDetails() {
       if (this.countries.length === 0) {
         return [];
       }
       return this.countries[this.countryName].reverse();
+    },
+
+    getCountryLength() {
+      return this.countries[this.countryName].length;
     },
 
     allCountriesName() {
@@ -93,8 +94,10 @@ export default {
       if (this.countries.length === 0) {
         return [];
       }
-      return this.countriesDetails.map((item) => {
-        return item.deaths;
+      return this.countriesDetails.map((item, index) => {
+        if (index < this.getRangeValue) {
+          return item.deaths;
+        }
       });
     },
 
@@ -102,8 +105,10 @@ export default {
       if (this.countries.length === 0) {
         return [];
       }
-      return this.countriesDetails.map((item) => {
-        return item.date;
+      return this.countriesDetails.map((item, index) => {
+        if (index < this.getRangeValue) {
+          return item.date;
+        }
       });
     },
 
@@ -111,33 +116,28 @@ export default {
       if (this.countries.length === 0) {
         return [];
       }
-      return this.countriesDetails.map((item) => {
-        return item.recovered;
+      return this.countriesDetails.map((item, index) => {
+        if (index < this.getRangeValue) {
+          return item.recovered;
+        }
       });
-    },
-
-    getRangeValue() {
-      return this.myRange;
     },
   },
 
   mounted() {
     this.loader = true;
-
     fetch("https://pomber.github.io/covid19/timeseries.json")
       .then((res) => res.json())
       .then((data) => {
         this.countries = data;
+
+        console.log(this.countries[this.countryName].length);
 
         this.renderChart(
           this.dateValues,
           this.deathValues,
           this.recoveredValues
         );
-
-        this.myRange();
-        console.log("myRange", this.myRange());
-
         this.loader = false;
       })
       .catch((error) => {
@@ -194,15 +194,6 @@ export default {
   },
 
   // Another way to track changes when changing from a certain value is by using watch
-  watch: {
-    // $route(to, from) {
-    //   console.log(to);
-    //   console.log(from);
-    // },
-
-    myRange: (val) => {
-      console.log("val", val);
-    },
-  },
+  watch: {},
 };
 </script>
