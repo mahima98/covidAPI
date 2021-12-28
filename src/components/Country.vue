@@ -18,7 +18,7 @@
           v-model="myRange"
           @change="changeRange"
         />
-        {{ myRange }}
+        {{ myRange }} {{ newRangeValue }}
       </div>
     </div>
     <div>
@@ -60,8 +60,9 @@ export default {
       number: 2,
       covidChartData: [],
       myRange: 150,
-      newRangeValue: "",
+      newRangeValue: null,
       errorMsg: "",
+      test: "",
       loader: false,
     };
   },
@@ -114,6 +115,10 @@ export default {
         return item.recovered;
       });
     },
+
+    getRangeValue() {
+      return this.myRange;
+    },
   },
 
   mounted() {
@@ -130,6 +135,9 @@ export default {
           this.recoveredValues
         );
 
+        this.myRange();
+        console.log("myRange", this.myRange());
+
         this.loader = false;
       })
       .catch((error) => {
@@ -138,11 +146,11 @@ export default {
   },
 
   methods: {
-    changeRange() {
-      this.$emit("changeRange", this.myRange);
-      console.log("changeRange-", this.myRange);
-      return this.myRange;
-    },
+    // changeRange() {
+    //   this.$emit("changeRange", this.myRange);
+    //   console.log("changeRange-", this.myRange);
+    //   return this.myRange;
+    // },
     renderChart(dateValues, deathValues, recoveredValues) {
       this.covidChartData = {
         type: "line",
@@ -154,14 +162,14 @@ export default {
               data: deathValues,
               backgroundColor: "rgba(54,73,93,.5)",
               borderColor: "#36495d",
-              borderWidth: 3,
+              borderWidth: 1,
             },
             {
               label: "Recovered",
               data: recoveredValues,
               backgroundColor: "rgba(71, 183,132,.5)",
               borderColor: "#47b784",
-              borderWidth: 3,
+              borderWidth: 1,
             },
           ],
         },
@@ -186,11 +194,15 @@ export default {
   },
 
   // Another way to track changes when changing from a certain value is by using watch
-  // watch: {
-  //   $route(to, from) {
-  //     console.log(to);
-  //     console.log(from);
-  //   },
-  // },
+  watch: {
+    // $route(to, from) {
+    //   console.log(to);
+    //   console.log(from);
+    // },
+
+    myRange: (val) => {
+      console.log("val", val);
+    },
+  },
 };
 </script>
