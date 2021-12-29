@@ -58,7 +58,7 @@ export default {
     return {
       countries: [],
       countriesData: [],
-      value: 150,
+      value: 700,
       loader: false,
     };
   },
