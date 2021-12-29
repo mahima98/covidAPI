@@ -29,6 +29,9 @@
     </div>
 
     <!-- countries covid info -->
+    <div class="text-4xl font-bold pb-8 text-center">
+      Covid details for the last 30 days:
+    </div>
     <div class="mb-10">
       <div class="grid grid-cols-6 gap-4">
         <div
