@@ -9,17 +9,19 @@
       </div>
     </div>
     <div class="py-4">
-      range: {{ modelValue }}
+      <div class="flex items-center gap-4">
+        <div class="font-medium">Choose range :</div>
 
-      <input
-        type="range"
-        min="0"
-        max="1200"
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-        class="border border-2"
-      />
-
+        <input
+          type="range"
+          min="0"
+          max="1200"
+          :value="modelValue"
+          @input="$emit('update:modelValue', $event.target.value)"
+          class="border border-2"
+        />
+        {{ modelValue }}
+      </div>
       <!-- graph -->
       <canvas id="covid-chart" height="100"></canvas>
     </div>

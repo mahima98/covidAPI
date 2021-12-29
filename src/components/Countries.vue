@@ -21,7 +21,6 @@
         >
       </div>
     </div>
-    <div>value: {{ value }}</div>
     <router-view :key="$route.params.countryName" v-model="value" />
   </div>
 </template>
