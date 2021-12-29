@@ -29,7 +29,7 @@
     </div>
 
     <!-- countries covid info -->
-    <div>
+    <div class="mb-10">
       <div class="grid grid-cols-6 gap-4">
         <div
           v-for="(country, index) in countriesDetails.slice(0, 30)"
