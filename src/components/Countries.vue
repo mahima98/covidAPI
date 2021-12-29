@@ -48,6 +48,9 @@ export default {
       .then((data) => {
         this.countriesData.value = data;
         this.countries = this.countriesData.value;
+      })
+      .catch((error) => {
+        console.log(error + "fetch");
       });
   },
 };

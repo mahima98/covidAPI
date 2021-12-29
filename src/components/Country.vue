@@ -154,7 +154,7 @@ export default {
         this.loader = false;
       })
       .catch((error) => {
-        this.errorMsg = error;
+        console.log(error + "fetch");
       });
   },
 
