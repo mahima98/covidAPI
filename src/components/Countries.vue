@@ -15,16 +15,14 @@
             name: 'singleCountry',
             params: { countryName: index },
           }"
+          v-model="value"
           class="px-4 py-2 my-2 bg-red-700 rounded-xl text-white hover:bg-red-900"
           >{{ index }}</router-link
         >
       </div>
     </div>
-    <div class="p-4 flex justify-center align-items">
-      <input type="range" min="0" max="1200" v-model="myRange" width="400" />
-      {{ myRange }}
-    </div>
-    <Country :key="$route.params.countryName" :inputRange="getRange" />
+    <div>value: {{ value }}</div>
+    <router-view :key="$route.params.countryName" v-model="value" />
   </div>
 </template>
 <script>
@@ -42,15 +40,9 @@ export default {
       countries: [],
       countriesData: [],
       myRange: 150,
+      value: 150,
     };
   },
-
-  computed: {
-    getRange() {
-      return this.myRange;
-    },
-  },
-
   mounted() {
     fetch("https://pomber.github.io/covid19/timeseries.json")
       .then((res) => res.json())

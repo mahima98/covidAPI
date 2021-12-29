@@ -9,7 +9,16 @@
       </div>
     </div>
     <div class="py-4">
-      range: {{ getRangeValue }}
+      range: {{ modelValue }}
+
+      <input
+        type="range"
+        min="0"
+        max="1200"
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
+        class="border border-2"
+      />
 
       <!-- graph -->
       <canvas id="covid-chart" height="100"></canvas>
@@ -43,7 +52,9 @@ import Menu from "./Menu.vue";
 
 export default {
   inheritAttrs: false,
-  props: ["inputRange"],
+  props: {
+    modelValue: String,
+  },
   components: {
     Menu,
   },
@@ -95,7 +106,7 @@ export default {
         return [];
       }
       return this.countriesDetails.map((item, index) => {
-        if (index < this.getRangeValue) {
+        if (index < this.modelValue) {
           return item.deaths;
         }
       });
@@ -106,7 +117,7 @@ export default {
         return [];
       }
       return this.countriesDetails.map((item, index) => {
-        if (index < this.getRangeValue) {
+        if (index < this.modelValue) {
           return item.date;
         }
       });
@@ -117,7 +128,7 @@ export default {
         return [];
       }
       return this.countriesDetails.map((item, index) => {
-        if (index < this.getRangeValue) {
+        if (index < this.modelValue) {
           return item.recovered;
         }
       });
@@ -195,5 +206,10 @@ export default {
 
   // Another way to track changes when changing from a certain value is by using watch
   watch: {},
+
+  updated() {
+    console.log("updated");
+    this.renderChart(this.dateValues, this.deathValues, this.recoveredValues);
+  },
 };
 </script>
