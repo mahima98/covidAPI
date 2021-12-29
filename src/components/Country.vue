@@ -78,10 +78,6 @@ export default {
       return this.$route.params.countryName;
     },
 
-    getRangeValue() {
-      return this.$props.inputRange;
-    },
-
     countriesDetails() {
       if (this.countries.length === 0) {
         return [];
@@ -159,11 +155,6 @@ export default {
   },
 
   methods: {
-    // changeRange() {
-    //   this.$emit("changeRange", this.myRange);
-    //   console.log("changeRange-", this.myRange);
-    //   return this.myRange;
-    // },
     renderChart(dateValues, deathValues, recoveredValues) {
       this.covidChartData = {
         type: "line",
