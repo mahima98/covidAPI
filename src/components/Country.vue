@@ -22,8 +22,10 @@
         />
         {{ modelValue }} days
       </div>
-      <!-- graph -->
-      <canvas id="covid-chart" height="100"></canvas>
+      <div class="p-8">
+        <!-- graph -->
+        <canvas id="covid-chart" height="100"></canvas>
+      </div>
     </div>
 
     <!-- countries covid info -->
@@ -35,8 +37,8 @@
           :values="country"
           :numbers="index"
         >
-          <div class="p-5 bg-red-50 rounded-md">
-            <div class="px-4 bg-red-400 rounded-md py-1 mb-4">
+          <div class="p-5 bg-bluegrey-600 text-white rounded-md">
+            <div class="px-4 bg-bluegrey-400 rounded-md py-1 mb-4">
               Date: {{ country.date }}
             </div>
             <div class="px-4">Confirmed: {{ country.confirmed }}</div>
@@ -167,6 +169,7 @@ export default {
               backgroundColor: "rgba(54,73,93,.5)",
               borderColor: "#36495d",
               borderWidth: 1,
+              color: "#ffffff",
             },
             {
               label: "Recovered",
@@ -186,6 +189,7 @@ export default {
                 ticks: {
                   beginAtZero: true,
                   padding: 25,
+                  color: "#ffffff",
                 },
               },
             ],
