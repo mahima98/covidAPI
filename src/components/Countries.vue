@@ -21,7 +21,7 @@
         >
       </div>
     </div>
-    <router-view :key="$route.params.countryName" v-model="value" />
+    <router-view :key="$route.params.countryName" v-model.number="value" />
   </div>
 </template>
 <script>

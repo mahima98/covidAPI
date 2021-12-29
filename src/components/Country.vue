@@ -20,7 +20,7 @@
           @input="$emit('update:modelValue', $event.target.value)"
           class="border border-2"
         />
-        {{ modelValue }}
+        {{ modelValue }} days
       </div>
       <!-- graph -->
       <canvas id="covid-chart" height="100"></canvas>
@@ -55,7 +55,7 @@ import Menu from "./Menu.vue";
 export default {
   inheritAttrs: false,
   props: {
-    modelValue: String,
+    modelValue: Number,
   },
   components: {
     Menu,
